@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <link href="http://feefighters.github.com/samurai-sinatra-demo/css/application.css" media="screen" rel="stylesheet" type="text/css"/>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>Samurai Demo</h1>
+      <hr>
+      <article class="span-7">
+        <form accept-charset="UTF-8" action="{URL}?action=create-transaction" class="new_transaction" id="new_transaction" method="post">
+  
+  <input id="processor_token" name="processor_token" type="hidden" value="{PROCESSOR_TOKEN}"/>
+  <input id="payment_method_token" name="payment_method_token" type="hidden" value="{PAYMENT_METHOD_TOKEN}"/>
+  <input id="transaction_custom" name="transaction[custom]" type="hidden" value="" />
+
+  <p>
+    <label for="transaction_type">Transaction type</label><br/>
+    <select id="transaction_type" name="transaction_type">
+      <option value="purchase">Purchase</option>
+      <option value="authorize">Authorize Only</option>
+    </select>
+  </p>
+
+  <div class="field-group">
+    <p>
+      <label for="amount">Amount</label><br/>
+      <input id="amount" name="amount" size="30" type="text" value=""/>
+    </p>
+    <p>
+      <label for="transaction_currency_code">Currency code</label><br/>
+      <input class="span-1" id="transaction_currency_code" name="transaction[currency_code]" size="30" type="text" value="US"/>
+    </p>
+  </div>
+
+  <div class="field-group">
+    <p>
+      <label for="transaction_billing_reference">Billing Reference</label><br/>
+      <input id="transaction_billing_reference" name="transaction[billing_reference]" size="30" type="text" value=""/>
+    </p>
+    <p>
+      <label for="transaction_customer_reference">Customer Reference</label><br/>
+      <input id="transaction_customer_reference" name="transaction[customer_reference]" size="30" type="text" value=""/>
+    </p>
+  </div>
+  <p>
+    <label for="transaction_descriptor">Description</label><br/>
+    <input id="transaction_descriptor" name="transaction[descriptor]" size="30" type="text" value=""/>
+  </p>
+
+  <p>
+    <input class="button red" name="commit" type="submit" value="Submit Transaction"/>
+  </p>
+</form>
+      </article>
+      <article class="span-5 last">
+        
+        <p class='callout highlight-block span-3'>
+          <strong>Start a</strong> <a href='{URL}' class='button blue small'>New Transaction</a>
+        </p>
+        
+      </article>
+    </div>
+  </body>
+</html>
