@@ -9,26 +9,27 @@
       <hr>
       <article class="span-7">
         <h3>Successful Purchase Transaction</h3>
-<h4>Reference ID: 72e1d7a320b7be1337852d49</h4>
+<h4>Reference ID: {REFERENCE_ID}</h4>
 
+{ERROR_SECTION}
 
 <p>
   <strong>Amount:</strong>
-  10.0 (US)
+  {AMOUNT} ({CURRENCY_CODE})
 </p>
 
 <p>
   <strong>Credit Card:</strong>
-  <em>XXXX XXXX XXXX</em> 1111
-  (01 / 2011)
+  <em>XXXX XXXX XXXX</em> {LAST_FOUR_DIGITS}
+  ({EXPIRY_MONTH} / {EXPIRY_YEAR})
 </p>
 
-<p><strong>Date / Time:</strong> 2011-08-14 09:30:29 UTC</p>
+<p><strong>Date / Time:</strong> {CREATED_AT} UTC</p>
 <p>
-  <strong>Descriptor:</strong> <br>
-  <strong>Billing Reference:</strong> <br>
-  <strong>Customer Reference: </strong> <br>
-  <strong>Custom Data: </strong> <br>
+  <strong>Descriptor: {DESCRIPTOR}</strong> <br>
+  <strong>Billing Reference: {BILLING_REFERENCE}</strong> <br>
+  <strong>Customer Reference: {CUSTOMER_REFERENCE}</strong> <br>
+  <strong>Custom Data: {CUSTOM}</strong> <br>
 </p>
 
 <p>
@@ -38,7 +39,7 @@
       <article class="span-5 last">
         
         <p class='callout highlight-block span-3'>
-          <strong>Start a</strong> <a href='/' class='button blue small'>New Transaction</a>
+          <strong>Start a</strong> <a href='{URL}' class='button blue small'>New Transaction</a>
         </p>
         
       </article>
