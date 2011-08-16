@@ -53,7 +53,7 @@ public class SamuraiDemoServlet extends HttpServlet {
 	}
 	
 	private void processAction(String action, HttpServletRequest req, Map<String, String> replaceVarsMap) throws IOException {
-		if("new-transaction".equals(action)) {
+		if("create-transaction".equals(action)) {
 			SamuraiGateway gateway = getSamuraiGateway();
 			Transaction transaction = gateway.processor().purchase(req.getParameter("payment_method_token"), Double.valueOf(req.getParameter("amount")), new Options());
 			replaceVarsMap.put("REFERENCE_ID", transaction.getReferenceId());
