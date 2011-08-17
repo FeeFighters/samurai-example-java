@@ -54,8 +54,19 @@ public class SamuraiDemoServlet extends HttpServlet {
 	
 	private void processAction(String action, HttpServletRequest req, Map<String, String> replaceVarsMap) throws IOException {
 		if("create-transaction".equals(action)) {
-			SamuraiGateway gateway = getSamuraiGateway();
-			Transaction transaction = gateway.processor().purchase(req.getParameter("payment_method_token"), Double.valueOf(req.getParameter("amount")), new Options());
+			final SamuraiGateway gateway = getSamuraiGateway();
+			
+			final Options options = new Options();
+			options.add("currency_code", req.getParameter("transaction[currency_code]"));
+			options.add("billing_reference", req.getParameter("transaction[billing_reference]"));
+			options.add("customer_reference", req.getParameter("transaction[customer_reference]"));
+			options.add("descriptor", req.getParameter("transaction[descriptor]"));
+			
+			final String paymentMethodToken = req.getParameter("payment_method_token");
+			final Double amount = Double.valueOf(req.getParameter("amount"));
+			final Transaction transaction = gateway.processor().purchase(paymentMethodToken, 
+					amount, options);
+			
 			replaceVarsMap.put("REFERENCE_ID", transaction.getReferenceId());
 			replaceVarsMap.put("AMOUNT", transaction.getAmount());
 			replaceVarsMap.put("CURRENCY_CODE", transaction.getCurrencyCode());
@@ -68,8 +79,9 @@ public class SamuraiDemoServlet extends HttpServlet {
 			replaceVarsMap.put("LAST_FOUR_DIGITS", transaction.getPaymentMethod().getLastFourDigits());
 			replaceVarsMap.put("EXPIRY_MONTH", String.valueOf(transaction.getPaymentMethod().getExpiryMonth()));
 			replaceVarsMap.put("EXPIRY_YEAR", String.valueOf(transaction.getPaymentMethod().getExpiryYear()));
+			replaceVarsMap.put("AVS_RESPONSE", StringUtils.defaultIfBlank(transaction.getProcessorResponse().getAvsResultCode(), "NONE"));
 			
-			StringBuilder errorSection = new StringBuilder();
+			final StringBuilder errorSection = new StringBuilder("");
 			if(Boolean.TRUE.equals(transaction.getProcessorResponse().getSuccess())) {
 				replaceVarsMap.put("SUCCESS", "Successful"); 
 			} else {
@@ -89,6 +101,7 @@ public class SamuraiDemoServlet extends HttpServlet {
 
 	private static String getHumanName(String name) {
 		name = StringUtils.replace(name, ".", " ");
+		name = StringUtils.replace(name, "_", " ");
 		name = StringUtils.capitalize(name);
 		return name;
 	}
@@ -109,6 +122,7 @@ public class SamuraiDemoServlet extends HttpServlet {
 		final Map<String, String> replaceVarsMap = new HashMap<String, String>();
 		replaceVarsMap.put("URL", req.getRequestURL().toString());
 		replaceVarsMap.put("PROCESSOR_TOKEN", getSamuraiGateway().getProcessorToken());
+		replaceVarsMap.put("MERCHANT_KEY", getSamuraiGateway().getMerchantKey());
 
 		final Enumeration en = req.getParameterNames();
 		while (en.hasMoreElements()) {
