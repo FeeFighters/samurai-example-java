@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="${lang}">
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="${_response_encoding}" />
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/crud.css'}" />        
+    </head>
+    <body id="crud">
+
+            <div id="crudBreadcrumb">
+                <a href="@{Articles.list()}">Articles</a> | 
+                <a href="@{PaymentMethods.list()}">Payment Methods</a> |
+                <a href="@{Orders.list()}">Orders</a> |
+				<a href="@{Reservations.list()}">Reservations</a>                 
+            </div>
+
+#{if flash.success}
+            <div class="crudFlash flashSuccess">
+                ${flash.success}
+            </div>
+#{/if}
+#{if flash.error || error}
+            <div class="crudFlash flashError">
+                ${error ?: flash.error}
+            </div>
+#{/if}
+
+        <div id="crudContent">
+#{doLayout /}
+        </div>
+
+        <div id="crudFooter">
+           Samurai Java Example App
+        </div>
+
+    </body>
+</html>

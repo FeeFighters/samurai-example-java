@@ -1,0 +1,29 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
+
+    <div id="crudListTable">
+		#{crud.table fields:['referenceId', 'createdAt', 'article', 'amount', 'creditReferenceId', 'actions'] }
+			#{crud.custom 'referenceId'}
+				${object.referenceId}
+			#{/crud.custom}
+			#{crud.custom 'amount'}
+				$${object.amount}
+			#{/crud.custom}				
+			#{crud.custom 'actions'}
+				<a href="@{Orders.delete(object.id)}">Destroy</a>
+				#{if object.creditReferenceId == null}
+					| <a href="@{Orders.credit(object.id)}">Credit</a>
+				#{/if}  															
+			#{/crud.custom}
+		#{/crud.table}
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>
+
+</div>

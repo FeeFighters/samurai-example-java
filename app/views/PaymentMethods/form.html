@@ -1,0 +1,89 @@
+#{ifErrors}
+   <h3>There were the following errors:</h3>
+ 
+	<ul>
+		#{errors}
+			<li>${error}</li>
+		#{/errors}
+	</ul>
+#{/ifErrors}
+
+<form action="https://samurai.feefighters.com/v1/payment_methods" method="POST">
+	<input name="redirect_url" type="hidden" value="#{get 'returnUrl'/}" /> 
+	<input name="merchant_key" type="hidden" value="${play.configuration.get('samurai.merchant_key')}" />
+	
+	<!-- Before populating the custom parameter, remember to escape reserved characters like <, > and & into their safe counterparts like &lt;, &gt; and &amp; -->
+	<input id="custom" name="custom" type="hidden" value="" />
+
+	<input name="payment_method_token" type="hidden" value="${pm.paymentMethodToken}">
+			
+	<div class="crudField crud_text">
+		<label for="credit_card_first_name">First name</label>
+		<input id="credit_card_first_name" type="text" size="50" name="credit_card[first_name]" value="${pm.firstName}">
+		<span class="crudHelp">Required.</span>
+	</div>			
+						
+	<div class="crudField crud_text">
+		<label for="credit_card_last_name">Last name</label>
+		<input id="credit_card_last_name" type="text" size="50" name="credit_card[last_name]" value="${pm.lastName}">
+		<span class="crudHelp">Required.</span>
+	</div>			
+			
+	<div class="crudField crud_text">
+		<label for="credit_card_address_1">Address 1</label>
+		<input id="credit_card_address_1" type="text" size="50" name="credit_card[address_1]" value="${pm.address1}">
+	</div>
+						
+	<div class="crudField crud_text">
+		<label for="credit_card_address_2">Address 2</label>
+		<input id="credit_card_address_2" type="text" size="50" name="credit_card[address_2]" value="${pm.address2}">
+	</div>
+
+	<div class="crudField crud_text">
+		<label for="credit_card_city">City</label>
+		<input id="credit_card_city" type="text" size="50" name="credit_card[city]" value="${pm.city}">
+	</div>			
+	
+	<div class="crudField crud_text">
+		<label for="credit_card_state">State</label>
+		<input id="credit_card_state" type="text" size="50" name="credit_card[state]" value="${pm.state}">
+	</div>			
+			
+	<div class="crudField crud_text">
+		<label for="credit_card_zip">Zip</label>
+		<input id="credit_card_zip" type="text" size="50" name="credit_card[zip]" value="${pm.zip}">
+	</div>			
+			
+	<div class="crudField crud_text">
+		<label for="credit_card_card_type">Card Type</label>
+		<select id="credit_card_card_type" name="credit_card[card_type]">
+			<option value="visa">Visa</option>
+			<option value="master">MasterCard</option> 
+		</select>
+	</div>			
+			
+	<div class="crudField crud_text">
+		<label for="credit_card_card_number">Card Number</label> 					
+		<input id="credit_card_card_number" name="credit_card[card_number]" type="text" value="" />
+	</div>			
+
+	<div class="crudField crud_text">
+		<label for="credit_card_verification_value">Security Code</label> 
+		<input id="credit_card_verification_value" name="credit_card[cvv]" type="text" value="" />
+	</div>
+
+	<div class="crudField crud_text">
+		<label for="credit_card_expiry">Expires on</label> 
+		<input id="credit_card_month" name="credit_card[expiry_month]" type="text" value="${pm.expiryMonth}"/> 
+		<input id="credit_card_year" name="credit_card[expiry_year]" type="text" value="${pm.expiryYear}"/>
+	</div>			
+
+	<p class="crudButtons">
+		<input type="submit" name="_save" value="Submit" /> 
+		
+		#{if cancelButtonEnabled}
+			<a id="paymentMethodCancel" href="#">Cancel</a>
+		#{/if}
+	</p>
+
+</form>

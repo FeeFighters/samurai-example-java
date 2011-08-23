@@ -1,0 +1,36 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
+
+    <div id="crudListTable">
+      #{crud.table fields:['paymentMethodToken', 'createdAt', 'firstName', 'lastName', 'redacted', 'retained', 'actions'] }
+				#{crud.custom 'paymentMethodToken'}
+					${object.paymentMethodToken}
+				#{/crud.custom}
+				#{crud.custom 'actions'}
+					Edit | 
+					<a href="@{PaymentMethods.view(object.id)}">View</a> 
+					| <a href="@{PaymentMethods.delete(object.id)}">Destroy</a>
+					
+					#{if !object.redacted}					
+						| <a href="@{PaymentMethods.redact(object.id)}">Redact</a>
+					#{/if}
+					#{if !object.retained}  
+						| <a href="@{PaymentMethods.retain(object.id)}">Retain</a>
+					#{/if} 					 					
+				#{/crud.custom}
+			#{/crud.table}
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'crud.add', type.modelName}</a>
+    </p>
+
+</div>

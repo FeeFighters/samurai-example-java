@@ -1,0 +1,57 @@
+#{extends 'CRUD/layout.html' /}
+
+<div id="crudBlank" class="${type.name}">
+
+	<h2 id="crudBlankTitle">#{get 'title'/}</h2>
+
+	<div class="objectForm">
+		#{form action:url, enctype:'multipart/form-data'}
+			<input type="hidden" name="articleId" value="${params.id}"/>
+				
+			<div class="crudField crud_text">
+		        <label for="payment_method">Article</label>
+					${article.name} ($${article.amount})
+			</div>				
+				
+			<div class="crudField crud_text">
+		        <label for="payment_method">Payment Method</label>
+		       		#{if paymentMethods}
+						selecting existing #{select 'paymentMethodId', items:paymentMethods, valueProperty:'id', labelProperty:'label', id:'payment_method' /} or 
+					#{/if}
+					<a href="#" id="newPaymentMethodButton">create new</a>											
+			</div>
+
+        	<p class="crudButtons">  
+				#{if paymentMethods}
+					<input id="buyButton" type="submit" name="_save" value="#{get 'title'/}" style="${expandPm ? 'display: none' : ''}" />
+				#{/if}	            
+        	</p>
+    	#{/form}
+    
+    	<div id="newPaymentMethodDiv" style="display: ${expandPm ? 'block' : 'none'}">
+	    	#{set 'returnUrl'}
+	    		#{currenturl/}
+	    	#{/set}
+		   	#{set cancelButtonEnabled: true/}
+	    	#{include 'PaymentMethods/form.html'/}
+	    </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" ></script>        
+<script>
+	$(document).ready(function(){
+		$("#newPaymentMethodButton").click(function(event){
+			$("#newPaymentMethodDiv").show();
+			$("#buyButton").hide();
+			event.preventDefault();
+		});
+		$("#paymentMethodCancel").click(function(event) {
+			$("#newPaymentMethodDiv").hide();
+			$("#buyButton").show();
+			event.preventDefault();
+		});
+	});
+</script>
+   

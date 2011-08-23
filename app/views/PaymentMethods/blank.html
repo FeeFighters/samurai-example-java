@@ -1,0 +1,14 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.blank.title', type.modelName) /}
+
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'crud.blank.title', type.modelName}</h2>
+
+   	#{set 'returnUrl'}
+   		#{currenturl/}
+   	#{/set}
+   	#{set cancelButtonEnabled: false/}
+   	#{include 'PaymentMethods/form.html'/}
+
+</div>

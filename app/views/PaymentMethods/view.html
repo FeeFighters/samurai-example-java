@@ -1,0 +1,68 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.show.title', type.modelName) /}
+
+<div id="crudShow" class="${type.name}">
+
+    <h2 id="crudShowTitle">Show Payment Method</h2>
+
+	<div class="crudField crud_text">
+      	<label>Payment Method Token</label>
+		${pm.paymentMethodToken}
+	</div>
+
+	<div class="crudField crud_text">
+        <label>First name</label>
+		${pm.firstName}
+	</div>			
+						
+	<div class="crudField crud_text">
+        <label>Last name</label>
+	    ${pm.lastName}
+	</div>			
+			
+	<div class="crudField crud_text">
+        <label>Address 1</label>
+	    <span id="a">${pm.address1}</span>
+	</div>
+				
+	<div class="crudField crud_text">
+        <label>Address 2</label>
+	    ${pm.address2}
+	</div>
+	
+	<div class="crudField crud_text">
+        <label>City</label>
+	    ${pm.city}
+	</div>			
+	
+	<div class="crudField crud_text">
+        <label>State</label>
+	    ${pm.state}
+	</div>			
+	
+	<div class="crudField crud_text">
+        <label>Zip</label>
+	    ${pm.zip}
+	</div>			
+			
+	<div class="crudField crud_text">
+        <label>Card Type</label>
+	   	${pm.cardType}
+	</div>			
+			
+	<div class="crudField crud_text">
+        <label>Card Number</label> 					
+	    ***** **** **** ${pm.lastFourDigits}
+	</div>			
+
+	<div class="crudField crud_text">
+		<label>Security Code</label> 
+		****
+	</div>
+
+	<div class="crudField crud_text">
+		<label for="credit_card_month">Expires on</label> 
+		${pm.expiryMonth} ${pm.expiryYear}
+	</div>			
+			
+</div>
