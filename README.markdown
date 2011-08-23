@@ -30,6 +30,7 @@ To run the application invoke the play command from the Play Framework with two 
 * the path to the directory with the example application
 
 Sample output:
+
 ```
 $ play run samurai_java_example_app
 ~        _            _ 
