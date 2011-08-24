@@ -2,7 +2,7 @@ package controllers;
 
 import utils.SamuraiGatewayFactory;
 
-import com.feefighers.SamuraiGateway;
+import com.feefighters.SamuraiGateway;
 
 public class Reservations extends CRUD {
 
@@ -17,13 +17,13 @@ public class Reservations extends CRUD {
 	protected static void captureOrVoidOperation(boolean capture, Long id) {
 		models.Reservation model = models.Reservation.findById(id);
 		SamuraiGateway gateway = SamuraiGatewayFactory.newInstance();
-		com.feefighers.model.Transaction transaction = gateway.transaction().find(model.referenceId);
+		com.feefighters.model.Transaction transaction = gateway.transaction().find(model.referenceId);
 		
 		if(capture) {
-			com.feefighers.model.Transaction caputreTransaction = gateway.transaction().credit(transaction, null, null);			
+			com.feefighters.model.Transaction caputreTransaction = gateway.transaction().credit(transaction, null, null);			
 			model.captureReferenceId = caputreTransaction.getReferenceId();
 		} else {
-			com.feefighers.model.Transaction voidTransaction = gateway.transaction().voidOperation(transaction, null);			
+			com.feefighters.model.Transaction voidTransaction = gateway.transaction().voidOperation(transaction, null);			
 			model.voidReferenceId = voidTransaction.getReferenceId();
 		}
 		model.save();

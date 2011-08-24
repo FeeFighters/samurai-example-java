@@ -2,7 +2,7 @@ package utils;
 
 import play.Play;
 
-import com.feefighers.SamuraiGateway;
+import com.feefighters.SamuraiGateway;
 
 public class SamuraiGatewayFactory {
 

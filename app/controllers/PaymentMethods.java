@@ -6,40 +6,40 @@ import org.apache.commons.lang.StringUtils;
 
 import utils.SamuraiGatewayFactory;
 
-import com.feefighers.SamuraiGateway;
+import com.feefighters.SamuraiGateway;
 
 public class PaymentMethods extends CRUD {
 	public static void blank() throws Exception {
 		if(params.get("payment_method_token") != null) {
 			SamuraiGateway gateway = SamuraiGatewayFactory.newInstance();			
-			com.feefighers.model.PaymentMethod pm = gateway.processor().find(params.get("payment_method_token"));				
+			com.feefighters.model.PaymentMethod pm = gateway.processor().find(params.get("payment_method_token"));				
 			if(!createPaymentMethodOrAddValidationErrors(pm)) {
 				render("/PaymentMethods/show.html", pm);
 			} else {
 				redirect("/paymentmethods/list");
 			}
 		} else {
-			com.feefighers.model.PaymentMethod pm = new com.feefighers.model.PaymentMethod();
+			com.feefighters.model.PaymentMethod pm = new com.feefighters.model.PaymentMethod();
 			render(pm);
 		}
 	}	
 	
 	public static void show(Long id) throws Exception {
 		models.PaymentMethod model = models.PaymentMethod.findById(id);
-		com.feefighers.model.PaymentMethod pm = SamuraiGatewayFactory.newInstance().processor().find(model.paymentMethodToken);
+		com.feefighters.model.PaymentMethod pm = SamuraiGatewayFactory.newInstance().processor().find(model.paymentMethodToken);
 		render(pm);		
 	}
 	
 	public static void view(Long id) throws Exception {
 		models.PaymentMethod model = models.PaymentMethod.findById(id);
-		com.feefighers.model.PaymentMethod pm = SamuraiGatewayFactory.newInstance().processor().find(model.paymentMethodToken);
+		com.feefighters.model.PaymentMethod pm = SamuraiGatewayFactory.newInstance().processor().find(model.paymentMethodToken);
 		render(pm);
 	}	
 	
 	public static void create() throws Exception {
 		if(params.get("payment_method_token") != null) {
 			SamuraiGateway gateway = SamuraiGatewayFactory.newInstance();			
-			com.feefighers.model.PaymentMethod pm = gateway.processor().find(params.get("payment_method_token"));				
+			com.feefighters.model.PaymentMethod pm = gateway.processor().find(params.get("payment_method_token"));				
 			if(!createPaymentMethodOrAddValidationErrors(pm)) {
 				render("/PaymentMethods/show.html", pm);
 			}			
@@ -58,7 +58,7 @@ public class PaymentMethods extends CRUD {
 	protected static void redactOrRetain(Long id, boolean retain) {
 		models.PaymentMethod model = models.PaymentMethod.findById(id);
 		SamuraiGateway gateway = SamuraiGatewayFactory.newInstance();
-		com.feefighers.model.PaymentMethod pm = gateway.processor().find(model.paymentMethodToken);
+		com.feefighters.model.PaymentMethod pm = gateway.processor().find(model.paymentMethodToken);
 		
 		if(retain) {
 			gateway.processor().retain(pm);
@@ -81,7 +81,7 @@ public class PaymentMethods extends CRUD {
 	
 	protected static void buyOrReserve(Long id, boolean buy) {
 		boolean expandPm = false;
-		com.feefighers.model.PaymentMethod pm = null;
+		com.feefighters.model.PaymentMethod pm = null;
 		if(params.get("payment_method_token") != null) {
 			SamuraiGateway gateway = SamuraiGatewayFactory.newInstance();			
 			pm = gateway.processor().find(params.get("payment_method_token"));			
@@ -92,7 +92,7 @@ public class PaymentMethods extends CRUD {
 				expandPm = true;
 			}			
 		} else {
-			pm = new com.feefighers.model.PaymentMethod();			
+			pm = new com.feefighters.model.PaymentMethod();			
 		}
 		
 		models.Article article = models.Article.findById(id);		
@@ -115,7 +115,7 @@ public class PaymentMethods extends CRUD {
 		SamuraiGateway gateway = SamuraiGatewayFactory.newInstance();
 		
 		if(purchase) {
-			com.feefighers.model.Transaction transaction = gateway.processor().purchase(pm.paymentMethodToken, article.amount, null);
+			com.feefighters.model.Transaction transaction = gateway.processor().purchase(pm.paymentMethodToken, article.amount, null);
 			
 			models.Order localTransaction = new models.Order();
 			localTransaction.referenceId = transaction.getReferenceId();
@@ -123,7 +123,7 @@ public class PaymentMethods extends CRUD {
 			localTransaction.amount = article.amount;
 			localTransaction.save();
 		} else {
-			com.feefighers.model.Transaction transaction = gateway.processor().authorize(pm.paymentMethodToken, article.amount, null);
+			com.feefighters.model.Transaction transaction = gateway.processor().authorize(pm.paymentMethodToken, article.amount, null);
 
 			models.Reservation localTransaction = new models.Reservation();
 			localTransaction.referenceId = transaction.getReferenceId();
@@ -135,7 +135,7 @@ public class PaymentMethods extends CRUD {
 		redirect("/" + (purchase ? "orders" : "reservations") + "/list");
 	}
 	
-	protected static boolean createPaymentMethodOrAddValidationErrors(com.feefighers.model.PaymentMethod pm) {				
+	protected static boolean createPaymentMethodOrAddValidationErrors(com.feefighters.model.PaymentMethod pm) {				
 		if(pm.getSensitiveDataValid()) {
 			models.PaymentMethod model = new models.PaymentMethod();
 			model.paymentMethodToken = pm.getPaymentMethodToken();
@@ -146,7 +146,7 @@ public class PaymentMethods extends CRUD {
 			model.save();
 			return true;
 		} else {
-			for(com.feefighers.model.Message message : pm.getMessageList().getList()) {
+			for(com.feefighters.model.Message message : pm.getMessageList().getList()) {
 				validation.addError("", getHumanName(message.getContext() + " " + message.getKey()));
 			}	
 			return false;
