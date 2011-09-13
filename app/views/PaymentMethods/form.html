@@ -8,7 +8,7 @@
 	</ul>
 #{/ifErrors}
 
-<form action="https://samurai.feefighters.com/v1/payment_methods" method="POST">
+<form action="https://api.samurai.feefighters.com/v1/payment_methods" method="POST">
 	<input name="redirect_url" type="hidden" value="#{get 'returnUrl'/}" /> 
 	<input name="merchant_key" type="hidden" value="${play.configuration.get('samurai.merchant_key')}" />
 	
